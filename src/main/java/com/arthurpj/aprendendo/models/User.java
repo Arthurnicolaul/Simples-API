@@ -1,6 +1,9 @@
 package com.arthurpj.aprendendo.models;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
@@ -9,6 +12,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -21,7 +25,7 @@ public class User {
   public interface CreateUser{}
   public interface UpdateUser{}
 
-  public static final String TABLE_NAME="user";
+  public static final String TABLE_NAME="username";
 
 
   @Id
@@ -42,7 +46,9 @@ public class User {
   @Size(groups = {CreateUser.class, UpdateUser.class},min = 6, max = 25)
   private String password;
 
-  //private List<task> tasks = new ArrayList<task>();
+
+  @OneToMany(mappedBy = "user")
+  private List<tesk> tasks = new ArrayList<tesk>();
 
 
   public User() {
@@ -77,6 +83,15 @@ public class User {
   public void setPassword(String password) {
     this.password = password;
   }
+
+  public List<tesk> getTasks() {
+    return this.tasks;
+  }
+
+  public void setTasks(List<tesk> tasks) {
+    this.tasks = tasks;
+  }
+
 
   @Override
   public int hashCode() {
